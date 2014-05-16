@@ -1,0 +1,7 @@
+Current Version 13.1.03 (yy.x.zz)
+
+yy = Latest Season Included (ie 13 = 2013)
+x = Major Update (New Tables or Fields added to dataset)
+zz = Minor Update (Corrections to past data only)
+
+See download page for full changelog
