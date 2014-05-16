@@ -1,0 +1,111 @@
+Brandon & Karl
+Team Name: Qualtrax
+
+Our database is for a stat tracking website. The database stores data pertaining to NFL players and their stats.  The application specifications are as follows: 
+1.	The database will keep track of players and their stats (game, season, and career)
+2.	Keep track of records of stats
+3.	Which players play for which team and when will be recorded
+4.	Team stats should also be recorded
+5.	Coaches (basic stats only – win/loss, team and year)
+6.	Money-related stats (player salaries, team cap room, etc.)
+7.	All stats recorded per season
+8.	Intentions:
+a.	Keep track of milestones (quarterback getting 50,000 passing yards, undefeated seasons, etc.)
+b.	Be able to extract players to make fantasy teams (think all-star teams in Madden)
+c.	Be able to report on stats (the website will show graphs of various reports, as well as tables)
+
+What we will model (all stats are per game, per season, and per career):
+•	Players
+		ID
+o		Height
+o		Weight
+o		Year of Birth
+o		Position
+o		Bench
+o		Forty
+o		Vertical
+o		Broad
+o		Shuttle
+o		Cone
+		Name
+		Last playoff appearance
+		Last playoff win
+o	Offensive
+		Yards
+		Points scored
+		Completion percentage
+		1st downs
+		Fumbles
+		Catches
+		Carries
+		Interceptions Thrown
+		Salary
+o	Defensive
+		Sacks
+		Interceptions
+		Forced Fumbles
+		Tackles
+		Tackles for Loss
+		Salary
+o	Punters
+		Net yards
+		Touchbacks
+		Inside 20
+		Salary
+•	Teams
+o		Wins
+o		Losses
+o		Ties
+o		Team cap room
+o		Scores from games
+o		Total points
+o		Points allowed
+o		Yards
+o		Yards allowed
+o		Time of Possession
+o		Sacks
+o		Interceptions
+o		Superbowl wins
+o		Playoff wins
+o		Playoff losses
+o		Last Playoff appearance
+o		Last Playoff win
+o		City
+o		Name
+o		Conference
+o		Stadium
+
+We will model these stats, and ONLY these stats (unless we decide to add more, so there).  These are the minimum of stats we hope to model.  We will be working equally as partners, both as designers and coders.
+
+Nice to haves:
+•	Teams
+o		Income brought to home city
+o		Penalty yards
+•	Stadiums
+o		Cost to construct
+o		Annual maintenance cost
+o		Capacity
+o		Home win ratio
+o		Average attendance
+o		Average ticket price
+o		Annual income
+•	Players
+o		Offensive
+			Targets
+			Drops
+o		Defensive
+			Targets
+			Catches allowed
+			Touchdowns allowed
+o		Punter
+			Number of punts
+			Average hang time
+			Average yards per punt
+o		Kickers
+			Longest field goal
+			Longest attempt
+			Number of attempts
+			Shortest missed field goal
+			Number of makes
+			Extra points ratio
+	
