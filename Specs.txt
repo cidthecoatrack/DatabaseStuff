@@ -14,54 +14,69 @@ a.	Keep track of milestones (quarterback getting 50,000 passing yards, undefeate
 b.	Be able to extract players to make fantasy teams (think all-star teams in Madden)
 c.	Be able to report on stats (the website will show graphs of various reports, as well as tables)
 
+Intermediary relations:
+	GameId (GUID) to GID
+	PlayerId (GUID) to PLAYER
+
 What we will model (all stats are per game, per season, and per career):
-•	Players
-		ID
-o		Height
-o		Weight
-o		Year of Birth
-o		Position
-o		Bench
-o		Forty
-o		Vertical
-o		Broad
-o		Shuttle
-o		Cone
-		Name
+	Games
+		GameId
+		SeasonId						(foreign key to seasons table)
+	Season
+		SeasonId
+		BeginningYear
+		EndYear							(contraint to be 1 higher than beginning year)
+•	Players							(This is a table - should be things with only 1 value at a time)
+		ID 							(on us, GUID, Primary key)
+o		Height 							(PLAYERS.HEIGHT)
+o		Weight 							(PLAYERS.WEIGHT)
+o		Year of Birth 						(PLAYERS.YOB)
+o		Position 						(PLAYERS.POS1)
+o		Bench 							(PLAYERS.BENCH, nullable)
+o		Forty 							(PLAYERS.FORTY, nullable)
+o		Vertical 						(PLAYERS.VERTICAL, nullable)
+o		Broad 							(PLAYERS.BROAD, nullable)
+o		Shuttle 						(PLAYERS.SHUTTLE, nullable)
+o		Cone 							(PLAYERS.CONE, NULLABLE)
+		Name 							(PLAYERS.FNAME + PLAYERS.LNAME)
 		Last playoff appearance
 		Last playoff win
-o	Offensive
-		Yards
+o	Offensive						(This is a table)
+		PlayerId						(foreign key to Players table)
+		GameId							(foreign key to Games table)
+		Yards							(OFFENSE.PY + OFFENSE.RY) WHERE GID = GameId							
 		Points scored
-		Completion percentage
-		1st downs
-		Fumbles
-		Catches
-		Carries
-		Interceptions Thrown
-		Salary
-o	Defensive
-		Sacks
-		Interceptions
-		Forced Fumbles
-		Tackles
-		Tackles for Loss
-		Salary
-o	Punters
-		Net yards
-		Touchbacks
-		Inside 20
-		Salary
-•	Teams
-o		Wins
-o		Losses
-o		Ties
-o		Team cap room
-o		Scores from games
-o		Total points
-o		Points allowed
-o		Yards
-o		Yards allowed
+		Completion percentage					(OFFENSE.PC / OFFENSE.PA) WHERE GID = GameId
+		1st downs						(SELECT COUNT(*) FROM CONVS WHERE (PLAYER = CONVS.BC OR PLAYER = CONVS.TRG) AND CONV = Y) WHERE GID = GameId
+		Fumbles							(SELECT COUNT(*) FROM FUMBLES WHERE PLAYER = FUMBLER) WHERE GID = GameId
+		Catches							(SELECT COUNT(*) FROM PASS WHERE TRG = PLAYER) WHERE GID = GameId
+		Carries							(SELECT COUNT(*) FROM RUSH WHERE RC = PLAYER) WHERE GID = GameId
+		Interceptions Thrown					(SELECT COUNT(*) FROM INTS, PASS WHERE PASS.PID = INTS.PID AND PASS.PASSER = PLAYER) WHERE GID = GameId
+		Team							(OFFENSE.TEAM) WHERE GID = GameId
+o	Defensive						(This is a table)
+		PlayerId						(foreign key to players table)
+		GameId							(foreign key to Games table)
+		Sacks							(SELECT COUNT(*) FROM SACKS WHERE PLAYER = SK) WHERE GID = GameId
+		Interceptions						(SELECT COUNT(*) FROM INTS WHERE PLAYER = INT) WHERE GID = GameId
+		Forced Fumbles						(SELECT COUNT(*) FROM FUMBLES WHERE PLAYER = FORC) WHERE GID = GameId
+		Tackles							(SELECT COUNT(*) FROM TACKLES WHERE PLAYER = TCK) WHERE GID = GameId
+		Tackles for Loss					(SELECT COUNT(PASS.YDS) FROM PASS, TACKLES WHERE PASS.PID = TACKLES.PID AND PLAYER = TCK AND YDS < 0) + (SELECT COUNT(RUSH.YDS) FROM RUSH, TACKLES WHERE RUSH.PID = TACKLES.PID AND PLAYER = TCK AND YDS < 0) WHERE GID = GameId
+		Team							(DEFENSE.TEAM) WHERE GID = GameId
+o	Punters							(This is a table)
+		PlayerId						(foreign key to players table)
+		GameId							(foreign key to Games table)
+		Net yards						(SELECT PNET FROM PUNTS WHERE PUNTER = PLAYER)
+		Touchbacks						(SELECT PTB FROM PUNTS WHERE PUNTER = PLAYER)
+		Inside 20						SELECT COUNT(*) FROM PUNTS WHERE (SELECT YFOG FROM CORE, PUNTS WHERE PUNTS.PID = CORE.PID) + (SELECT PNET FROM PUNTS WHERE PUNTER = PLAYER) > 80
+		Team							OFFENSE.TEAM WHERE GID = GameId
+•	Teams							(This is a table)
+		GameId							(foreign key)
+		TeamId							(GUID)
+		Status							Win, Lose, Tie
+o		Points scored						TEAM.PTS for game
+o		Points allowed						SELECT PTS FROM TEAM WHERE GID = GameId AND TeamId <> TID
+o		Yards							TEAM.RY + TEAM.PY
+o		Yards allowed						(SELECT RY FROM TEAM WHERE GID = GameId AND TeamId <> TID) + (SELECT PY FROM TEAM WHERE GID = GameId AND TeamId <> TID)
 o		Time of Possession
 o		Sacks
 o		Interceptions
