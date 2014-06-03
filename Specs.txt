@@ -22,10 +22,14 @@ What we will model (all stats are per game, per season, and per career):
 	Games
 		GameId
 		SeasonId						(foreign key to seasons table)
+		HomeTeamId
+		VisitingTeamId
+		PlayoffGame??(booleans)
+		SuperBowl?
 	Season
 		SeasonId
 		BeginningYear
-		EndYear							(contraint to be 1 higher than beginning year)
+		EndYear							(constraint to be 1 higher than beginning year)
 •	Players							(This is a table - should be things with only 1 value at a time)
 		ID 							(on us, GUID, Primary key)
 o		Height 							(PLAYERS.HEIGHT)
@@ -69,7 +73,7 @@ o	Punters							(This is a table)
 		Touchbacks						(SELECT PTB FROM PUNTS WHERE PUNTER = PLAYER)
 		Inside 20						SELECT COUNT(*) FROM PUNTS WHERE (SELECT YFOG FROM CORE, PUNTS WHERE PUNTS.PID = CORE.PID) + (SELECT PNET FROM PUNTS WHERE PUNTER = PLAYER) > 80
 		Team							OFFENSE.TEAM WHERE GID = GameId
-•	Teams							(This is a table)
+•	TeamsGameStats							(This is a table)
 		GameId							(foreign key)
 		TeamId							(GUID)
 		Status							Win, Lose, Tie
@@ -77,15 +81,26 @@ o		Points scored						TEAM.PTS for game
 o		Points allowed						SELECT PTS FROM TEAM WHERE GID = GameId AND TeamId <> TID
 o		Yards							TEAM.RY + TEAM.PY
 o		Yards allowed						(SELECT RY FROM TEAM WHERE GID = GameId AND TeamId <> TID) + (SELECT PY FROM TEAM WHERE GID = GameId AND TeamId <> TID)
-o		Time of Possession
-o		Sacks
-o		Interceptions
-o		Superbowl wins
-o		Playoff wins
-o		Playoff losses
-o		Last Playoff appearance
-o		Last Playoff win
-o		City
+o		Time of Possession					SELECT TOP FROM TEAM WHERE GID = GameId AND TeamId = TID
+o		Sacks							SELECT SK FROM TEAM WHERE GID = GameId AND TeamId <> TID
+o		Interceptions						SELECT INT FROM TEAM WHERE GID = GameId AND TeamId = TID
+	Teams
+		TeamId(primary key)
+		TeamName
+o		Superbowl wins						SELECT (wins in last game of a season for that teams)										
+o		Playoff wins						A win in the last 11 games of a particular season
+o		Playoff losses						A loss in the last 11 games of a season
+o		Last Playoff appearance(seasonId)			Last win/loss in last 11 games
+o		Last Playoff win(seasonId)				Last win in last 11 games
+	
+
+
+
+
+--maybe later
+TeamsPerSeason
+		SeasonId						(foreign key)
+o		City														
 o		Name
 o		Conference
 o		Stadium
