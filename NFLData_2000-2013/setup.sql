@@ -7,8 +7,8 @@
 -- Server version: 5.1.50
 -- PHP Version: 5.3.10
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+--SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+--SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -17,691 +17,665 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Table structure for table `blocks`
+-- Table structure for table blocks
 --
 
-CREATE TABLE IF NOT EXISTS `blocks` (
-  `PID` int(7) NOT NULL,
-  `BLK` varchar(7) NOT NULL,
-  `BRCV` varchar(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Blocked Punts, Field Goal Attempts, etc.';
+CREATE TABLE blocks (
+  PID integer NOT NULL,
+  BLK varchar(7) NOT NULL,
+  BRCV varchar(7) NOT NULL,
+  UNIQUE (PID)
+)
+
+CREATE TABLE comps (
+  PID integer NOT NULL,
+  UNIQUE (PID)
+)
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comps`
+-- Table structure for table convs
 --
 
-CREATE TABLE IF NOT EXISTS `comps` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Pass Completions';
-
+CREATE TABLE  convs (
+  PID integer NOT NULL,
+  TYPE varchar(4) NOT NULL,
+  BC varchar(7) NOT NULL,
+  PSR varchar(7) NOT NULL,
+  TRG varchar(7) NOT NULL,
+  CONV char(1) NOT NULL,
+  UNIQUE (PID)
+) 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `convs`
+-- Table structure for table core
 --
 
-CREATE TABLE IF NOT EXISTS `convs` (
-  `PID` int(7) NOT NULL,
-  `TYPE` varchar(4) NOT NULL,
-  `BC` varchar(7) NOT NULL,
-  `PSR` varchar(7) NOT NULL,
-  `TRG` varchar(7) NOT NULL,
-  `CONV` char(1) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='2 Point Conversion Attempts (Y=Success, N=Fail)';
-
+CREATE TABLE  core (
+  GID integer NOT NULL,
+  PID integer NOT NULL,
+  [OFF] varchar(3) NOT NULL,
+  DEF varchar(3) NOT NULL,
+  TYPE varchar(4) NOT NULL,
+  DSEQ smallint NOT NULL,
+  LEN smallint NOT NULL,
+  QTR smallint NOT NULL,
+  MIN smallint NOT NULL,
+  SEC smallint NOT NULL,
+  PTSO smallint NOT NULL,
+  PTSD smallint NOT NULL,
+  TIMO smallint NOT NULL,
+  TIMD smallint NOT NULL,
+  DWN smallint NOT NULL,
+  YTG smallint NOT NULL,
+  YFOG smallint NOT NULL,
+  ZONE smallint NOT NULL,
+  OLID integer NOT NULL,
+  UNIQUE (PID)
+)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `core`
+-- Table structure for table dbacks
 --
 
-CREATE TABLE IF NOT EXISTS `core` (
-  `GID` int(5) NOT NULL,
-  `PID` int(7) NOT NULL,
-  `OFF` varchar(3) NOT NULL,
-  `DEF` varchar(3) NOT NULL,
-  `TYPE` varchar(4) NOT NULL,
-  `DSEQ` tinyint(2) NOT NULL,
-  `LEN` tinyint(2) NOT NULL,
-  `QTR` tinyint(1) NOT NULL,
-  `MIN` tinyint(2) NOT NULL,
-  `SEC` tinyint(2) NOT NULL,
-  `PTSO` tinyint(2) NOT NULL,
-  `PTSD` tinyint(2) NOT NULL,
-  `TIMO` tinyint(2) NOT NULL,
-  `TIMD` tinyint(2) NOT NULL,
-  `DWN` tinyint(1) NOT NULL,
-  `YTG` tinyint(2) NOT NULL,
-  `YFOG` tinyint(2) NOT NULL,
-  `ZONE` tinyint(1) NOT NULL,
-  `OLID` int(5) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
+CREATE TABLE  dbacks (
+  PID integer NOT NULL,
+  DFB varchar(7) NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table defense
+--
+
+CREATE TABLE  defense (
+  UID integer NOT NULL,
+  GID integer NOT NULL,
+  PLAYER varchar(7) NOT NULL,
+  SOLO decimal(3,1) NOT NULL,
+  COMB decimal(3,1) NOT NULL,
+  SCK decimal(2,1) NOT NULL,
+  SAF smallint NOT NULL,
+  BLK smallint NOT NULL,
+  INT smallint NOT NULL,
+  PDEF smallint NOT NULL,
+  FRCV smallint NOT NULL,
+  FORC smallint NOT NULL,
+  TDD smallint NOT NULL,
+  PENY smallint NOT NULL,
+  FPTS decimal(3,1) NOT NULL,
+  GAME smallint NOT NULL,
+  SEAS smallint NOT NULL,
+  YEAR integer NOT NULL,
+  TEAM varchar(3) NOT NULL,
+  UNIQUE (UID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table drives
+--
+
+CREATE TABLE  drives (
+  UID integer NOT NULL,
+  GID integer NOT NULL,
+  FPID integer NOT NULL,
+  TNAME varchar(3) NOT NULL,
+  DRVN smallint NOT NULL,
+  OBT varchar(4) DEFAULT NULL,
+  QTR smallint NOT NULL,
+  MIN smallint NOT NULL,
+  SEC smallint NOT NULL,
+  YFOG smallint NOT NULL,
+  PLAYS smallint NOT NULL,
+  SUCC smallint NOT NULL,
+  RFD smallint NOT NULL,
+  PFD smallint NOT NULL,
+  OFD smallint NOT NULL,
+  RY integer NOT NULL,
+  RA smallint NOT NULL,
+  PY integer NOT NULL,
+  PA smallint NOT NULL,
+  PC smallint NOT NULL,
+  PEYF smallint NOT NULL,
+  PEYA smallint NOT NULL,
+  NET integer NOT NULL,
+  RES varchar(4) DEFAULT NULL,
+  UNIQUE (UID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table fdowns
+--
+
+CREATE TABLE  fdowns (
+  PID integer NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table fgxp
+--
+
+CREATE TABLE  fgxp (
+  PID integer NOT NULL,
+  FGXP char(2) NOT NULL,
+  FKICKER varchar(7) NOT NULL,
+  DIST smallint NOT NULL,
+  GOOD char(1) NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table fumbles
+--
+
+CREATE TABLE  fumbles (
+  PID integer NOT NULL,
+  FUM varchar(7) NOT NULL,
+  FRCV varchar(7) NOT NULL,
+  FRY integer NOT NULL,
+  FORC varchar(7) NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table games
+--
+
+CREATE TABLE  games (
+  GID integer NOT NULL,
+  SEAS integer NOT NULL,
+  WK smallint NOT NULL,
+  DAY varchar(3) NOT NULL,
+  V varchar(3) NOT NULL,
+  H varchar(3) NOT NULL,
+  STAD varchar(45) NOT NULL,
+  TEMP varchar(4) DEFAULT NULL,
+  HUMD varchar(4) DEFAULT NULL,
+  WSPD varchar(4) DEFAULT NULL,
+  WDIR varchar(4) DEFAULT NULL,
+  COND varchar(15) DEFAULT NULL,
+  SURF varchar(30) NOT NULL,
+  OU smallint NOT NULL,
+  SPRV decimal(3,1) NOT NULL,
+  PTSV smallint NOT NULL,
+  PTSH smallint NOT NULL,
+  UNIQUE (GID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table ints
+--
+
+CREATE TABLE  ints (
+  PID integer NOT NULL,
+  INT varchar(7) NOT NULL,
+  IRY smallint NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table kickers
+--
+
+CREATE TABLE  kickers (
+  UID integer NOT NULL,
+  GID integer NOT NULL,
+  PLAYER varchar(7) NOT NULL,
+  PAT smallint NOT NULL,
+  FGS smallint NOT NULL,
+  FGM smallint NOT NULL,
+  FGL smallint NOT NULL,
+  FPTS decimal(3,1) NOT NULL,
+  UNIQUE (UID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table kickoffs
+--
+
+CREATE TABLE  kickoffs (
+  PID integer NOT NULL,
+  KICKER varchar(7) NOT NULL,
+  KGRO smallint NOT NULL,
+  KNET smallint NOT NULL,
+  KTB varchar(1) NOT NULL,
+  KR varchar(7) NOT NULL,
+  KRY smallint NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table knees
+--
+
+CREATE TABLE  knees (
+  PID integer NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table nohuddle
+--
+
+CREATE TABLE  nohuddle (
+  PID integer NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table offense
+--
+
+CREATE TABLE  offense (
+  UID integer NOT NULL,
+  GID integer NOT NULL,
+  PLAYER varchar(7) NOT NULL,
+  PA smallint NOT NULL,
+  PC smallint NOT NULL,
+  PY integer NOT NULL,
+  INT smallint NOT NULL,
+  TDP smallint NOT NULL,
+  RA smallint NOT NULL,
+  SRA smallint NOT NULL,
+  RY integer NOT NULL,
+  TDR smallint NOT NULL,
+  TRG smallint NOT NULL,
+  REC smallint NOT NULL,
+  RECY integer NOT NULL,
+  TDRE smallint NOT NULL,
+  FUML smallint NOT NULL,
+  PENY smallint NOT NULL,
+  FPTS decimal(3,1) NOT NULL,
+  GAME smallint NOT NULL,
+  SEAS smallint NOT NULL,
+  YEAR integer NOT NULL,
+  TEAM varchar(3) NOT NULL,
+  UNIQUE (UID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table oline
+--
+
+CREATE TABLE  oline (
+  OLID integer NOT NULL,
+  LT varchar(7) NOT NULL,
+  LG varchar(7) NOT NULL,
+  C varchar(7) NOT NULL,
+  RG varchar(7) NOT NULL,
+  RT varchar(7) NOT NULL,
+  UNIQUE (OLID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table pass
+--
+
+CREATE TABLE  pass (
+  PID integer NOT NULL,
+  PSR varchar(7) NOT NULL,
+  TRG varchar(7) NOT NULL,
+  LOC varchar(2) NOT NULL,
+  YDS smallint NOT NULL,
+  UNIQUE (PID)
+) 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table penalties
+--
+
+CREATE TABLE  penalties (
+  UID integer NOT NULL,
+  PID integer NOT NULL,
+  PTM varchar(3) NOT NULL,
+  PEN varchar(7) NOT NULL,
+  [DESC] varchar(40) NOT NULL,
+  CAT smallint NOT NULL,
+  PEY smallint NOT NULL,
+  ACT varchar(1) NOT NULL,
+  UNIQUE (UID)
+)
+-- --------------------------------------------------------
+
+--
+-- Table structure for table players
+--
+
+CREATE TABLE  players (
+  PLAYER varchar(7) NOT NULL,
+  FNAME varchar(20) NOT NULL,
+  LNAME varchar(25) NOT NULL,
+  PNAME varchar(25) NOT NULL,
+  POS1 varchar(2) NOT NULL,
+  POS2 varchar(2) DEFAULT NULL,
+  HEIGHT smallint NOT NULL,
+  WEIGHT integer NOT NULL,
+  YOB integer NOT NULL,
+  FORTY decimal(3,2) DEFAULT NULL,
+  BENCH smallint DEFAULT NULL,
+  VERTICAL decimal(3,1) DEFAULT NULL,
+  BROAD integer DEFAULT NULL,
+  SHUTTLE decimal(3,2) DEFAULT NULL,
+  CONE decimal(3,2) DEFAULT NULL,
+  DPOS integer NOT NULL,
+  COL varchar(35) DEFAULT NULL,
+  DV varchar(35) DEFAULT NULL,
+  START integer NOT NULL,
+  CTEAM varchar(3) DEFAULT NULL,
+  UNIQUE (PLAYER)
+)
+------------------------------------
+
+--
+-- Table structure for table punts
+--
+
+CREATE TABLE  punts (
+  PID integer NOT NULL,
+  PUNTER varchar(7) NOT NULL,
+  PGRO smallint NOT NULL,
+  PNET smallint NOT NULL,
+  PTS varchar(1) NOT NULL,
+  PR varchar(7) NOT NULL,
+  PRY smallint NOT NULL,
+  PFC varchar(1) NOT NULL,
+  UNIQUE (PID)
+)
+-- --------------------------------------------------------
+
+--
+-- Table structure for table redzone
+--
+
+CREATE TABLE  redzone (
+  UID integer NOT NULL,
+  GID integer NOT NULL,
+  PLAYER varchar(7) NOT NULL,
+  PA smallint NOT NULL,
+  PC smallint NOT NULL,
+  PY integer NOT NULL,
+  INT smallint NOT NULL,
+  RA smallint NOT NULL,
+  SRA smallint NOT NULL,
+  RY integer NOT NULL,
+  TRG smallint NOT NULL,
+  REC smallint NOT NULL,
+  RECY integer NOT NULL,
+  FUML smallint NOT NULL,
+  PENY smallint NOT NULL,
+  UNIQUE KEY UID (UID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dbacks`
+-- Table structure for table rush
 --
 
-CREATE TABLE IF NOT EXISTS `dbacks` (
-  `PID` int(7) NOT NULL,
-  `DFB` varchar(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Defensive Backs that were listed as the defender on Passes';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `defense`
---
-
-CREATE TABLE IF NOT EXISTS `defense` (
-  `UID` int(6) NOT NULL,
-  `GID` int(5) NOT NULL,
-  `PLAYER` varchar(7) NOT NULL,
-  `SOLO` decimal(3,1) NOT NULL,
-  `COMB` decimal(3,1) NOT NULL,
-  `SCK` decimal(2,1) NOT NULL,
-  `SAF` tinyint(1) NOT NULL,
-  `BLK` tinyint(1) NOT NULL,
-  `INT` tinyint(1) NOT NULL,
-  `PDEF` tinyint(1) NOT NULL,
-  `FRCV` tinyint(1) NOT NULL,
-  `FORC` tinyint(1) NOT NULL,
-  `TDD` tinyint(1) NOT NULL,
-  `PENY` tinyint(2) NOT NULL,
-  `FPTS` decimal(3,1) NOT NULL,
-  `GAME` tinyint(2) NOT NULL,
-  `SEAS` tinyint(2) NOT NULL,
-  `YEAR` int(4) NOT NULL,
-  `TEAM` varchar(3) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
+CREATE TABLE  rush (
+  PID integer NOT NULL,
+  BC varchar(7) NOT NULL,
+  DIR varchar(2) NOT NULL,
+  YDS smallint NOT NULL,
+  UNIQUE (PID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `drives`
+-- Table structure for table sacks
 --
 
-CREATE TABLE IF NOT EXISTS `drives` (
-  `UID` int(6) NOT NULL,
-  `GID` int(7) NOT NULL,
-  `FPID` int(7) NOT NULL,
-  `TNAME` varchar(3) NOT NULL,
-  `DRVN` tinyint(2) NOT NULL,
-  `OBT` varchar(4) DEFAULT NULL,
-  `QTR` tinyint(1) NOT NULL,
-  `MIN` tinyint(2) NOT NULL,
-  `SEC` tinyint(2) NOT NULL,
-  `YFOG` tinyint(2) NOT NULL,
-  `PLAYS` tinyint(2) NOT NULL,
-  `SUCC` tinyint(2) NOT NULL,
-  `RFD` tinyint(2) NOT NULL,
-  `PFD` tinyint(2) NOT NULL,
-  `OFD` tinyint(2) NOT NULL,
-  `RY` int(3) NOT NULL,
-  `RA` tinyint(2) NOT NULL,
-  `PY` int(3) NOT NULL,
-  `PA` tinyint(2) NOT NULL,
-  `PC` tinyint(2) NOT NULL,
-  `PEYF` tinyint(2) NOT NULL,
-  `PEYA` tinyint(2) NOT NULL,
-  `NET` int(3) NOT NULL,
-  `RES` varchar(4) DEFAULT NULL,
-  UNIQUE KEY `UID` (`UID`)
+CREATE TABLE  sacks (
+  UID integer NOT NULL,
+  PID integer NOT NULL,
+  QB varchar(7) NOT NULL,
+  SK varchar(7) NOT NULL,
+  VALUE decimal(2,1) NOT NULL,
+  YDSL integer NOT NULL,
+  UNIQUE KEY UID (UID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fdowns`
+-- Table structure for table safeties
 --
 
-CREATE TABLE IF NOT EXISTS `fdowns` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Plays that resulted in a First Down';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `fgxp`
---
-
-CREATE TABLE IF NOT EXISTS `fgxp` (
-  `PID` int(7) NOT NULL,
-  `FGXP` char(2) NOT NULL,
-  `FKICKER` varchar(7) NOT NULL,
-  `DIST` tinyint(2) NOT NULL,
-  `GOOD` char(1) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
+CREATE TABLE  safeties (
+  PID integer NOT NULL,
+  SAF varchar(7) NOT NULL,
+  UNIQUE (PID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fumbles`
+-- Table structure for table scoring
 --
 
-CREATE TABLE IF NOT EXISTS `fumbles` (
-  `PID` int(7) NOT NULL,
-  `FUM` varchar(7) NOT NULL,
-  `FRCV` varchar(7) NOT NULL,
-  `FRY` int(3) NOT NULL,
-  `FORC` varchar(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
+CREATE TABLE  scoring (
+  PID integer NOT NULL,
+  PTS smallint NOT NULL,
+  UNIQUE (PID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `games`
+-- Table structure for table shotgun
 --
 
-CREATE TABLE IF NOT EXISTS `games` (
-  `GID` int(5) NOT NULL,
-  `SEAS` int(4) NOT NULL,
-  `WK` tinyint(2) NOT NULL,
-  `DAY` varchar(3) NOT NULL,
-  `V` varchar(3) NOT NULL,
-  `H` varchar(3) NOT NULL,
-  `STAD` varchar(45) NOT NULL,
-  `TEMP` varchar(4) DEFAULT NULL,
-  `HUMD` varchar(4) DEFAULT NULL,
-  `WSPD` varchar(4) DEFAULT NULL,
-  `WDIR` varchar(4) DEFAULT NULL,
-  `COND` varchar(15) DEFAULT NULL,
-  `SURF` varchar(30) NOT NULL,
-  `OU` tinyint(2) NOT NULL,
-  `SPRV` decimal(3,1) NOT NULL,
-  `PTSV` tinyint(2) NOT NULL,
-  `PTSH` tinyint(2) NOT NULL,
-  UNIQUE KEY `GID` (`GID`)
+CREATE TABLE  shotgun (
+  PID integer NOT NULL,
+  UNIQUE (PID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ints`
+-- Table structure for table spikes
 --
 
-CREATE TABLE IF NOT EXISTS `ints` (
-  `PID` int(7) NOT NULL,
-  `INT` varchar(7) NOT NULL,
-  `IRY` tinyint(3) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Interceptions';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kickers`
---
-
-CREATE TABLE IF NOT EXISTS `kickers` (
-  `UID` int(6) NOT NULL,
-  `GID` int(5) NOT NULL,
-  `PLAYER` varchar(7) NOT NULL,
-  `PAT` tinyint(1) NOT NULL,
-  `FGS` tinyint(1) NOT NULL,
-  `FGM` tinyint(1) NOT NULL,
-  `FGL` tinyint(1) NOT NULL,
-  `FPTS` decimal(3,1) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='FGS: 0 - 39 yds; FGM: 40 - 49 yds; FGL: 50+ yds';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `kickoffs`
---
-
-CREATE TABLE IF NOT EXISTS `kickoffs` (
-  `PID` int(7) NOT NULL,
-  `KICKER` varchar(7) NOT NULL,
-  `KGRO` tinyint(2) NOT NULL,
-  `KNET` tinyint(2) NOT NULL,
-  `KTB` varchar(1) NOT NULL,
-  `KR` varchar(7) NOT NULL,
-  `KRY` tinyint(3) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
+CREATE TABLE  spikes (
+  PID integer NOT NULL,
+  UNIQUE (PID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `knees`
+-- Table structure for table splays
 --
 
-CREATE TABLE IF NOT EXISTS `knees` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE  splays (
+  PID integer NOT NULL,
+  UNIQUE (PID)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT=Successful Plays - See notes for more info.;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `nohuddle`
+-- Table structure for table tackles
 --
 
-CREATE TABLE IF NOT EXISTS `nohuddle` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE  tackles (
+  UID integer NOT NULL,
+  PID integer NOT NULL,
+  TCK varchar(7) NOT NULL,
+  VALUE decimal(2,1) NOT NULL,
+  UNIQUE KEY UID (UID)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT=Special teams tackles are not counted (ie, kickoffs, punts);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `offense`
+-- Table structure for table team
 --
 
-CREATE TABLE IF NOT EXISTS `offense` (
-  `UID` int(6) NOT NULL,
-  `GID` int(5) NOT NULL,
-  `PLAYER` varchar(7) NOT NULL,
-  `PA` tinyint(2) NOT NULL,
-  `PC` tinyint(2) NOT NULL,
-  `PY` int(3) NOT NULL,
-  `INT` tinyint(1) NOT NULL,
-  `TDP` tinyint(1) NOT NULL,
-  `RA` tinyint(2) NOT NULL,
-  `SRA` tinyint(2) NOT NULL,
-  `RY` int(3) NOT NULL,
-  `TDR` tinyint(1) NOT NULL,
-  `TRG` tinyint(2) NOT NULL,
-  `REC` tinyint(2) NOT NULL,
-  `RECY` int(3) NOT NULL,
-  `TDRE` tinyint(1) NOT NULL,
-  `FUML` tinyint(1) NOT NULL,
-  `PENY` tinyint(2) NOT NULL,
-  `FPTS` decimal(3,1) NOT NULL,
-  `GAME` tinyint(2) NOT NULL,
-  `SEAS` tinyint(2) NOT NULL,
-  `YEAR` int(4) NOT NULL,
-  `TEAM` varchar(3) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oline`
---
-
-CREATE TABLE IF NOT EXISTS `oline` (
-  `OLID` int(5) NOT NULL,
-  `LT` varchar(7) NOT NULL,
-  `LG` varchar(7) NOT NULL,
-  `C` varchar(7) NOT NULL,
-  `RG` varchar(7) NOT NULL,
-  `RT` varchar(7) NOT NULL,
-  UNIQUE KEY `OLID` (`OLID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `pass`
---
-
-CREATE TABLE IF NOT EXISTS `pass` (
-  `PID` int(7) NOT NULL,
-  `PSR` varchar(7) NOT NULL,
-  `TRG` varchar(7) NOT NULL,
-  `LOC` varchar(2) NOT NULL,
-  `YDS` tinyint(3) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `penalties`
---
-
-CREATE TABLE IF NOT EXISTS `penalties` (
-  `UID` int(6) NOT NULL,
-  `PID` int(7) NOT NULL,
-  `PTM` varchar(3) NOT NULL,
-  `PEN` varchar(7) NOT NULL,
-  `DESC` varchar(40) NOT NULL,
-  `CAT` tinyint(1) NOT NULL,
-  `PEY` tinyint(2) NOT NULL,
-  `ACT` varchar(1) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `players`
---
-
-CREATE TABLE IF NOT EXISTS `players` (
-  `PLAYER` varchar(7) NOT NULL,
-  `FNAME` varchar(20) NOT NULL,
-  `LNAME` varchar(25) NOT NULL,
-  `PNAME` varchar(25) NOT NULL,
-  `POS1` varchar(2) NOT NULL,
-  `POS2` varchar(2) DEFAULT NULL,
-  `HEIGHT` tinyint(2) NOT NULL,
-  `WEIGHT` int(3) NOT NULL,
-  `YOB` int(4) NOT NULL,
-  `FORTY` decimal(3,2) DEFAULT NULL,
-  `BENCH` tinyint(2) DEFAULT NULL,
-  `VERTICAL` decimal(3,1) DEFAULT NULL,
-  `BROAD` int(3) DEFAULT NULL,
-  `SHUTTLE` decimal(3,2) DEFAULT NULL,
-  `CONE` decimal(3,2) DEFAULT NULL,
-  `DPOS` int(3) NOT NULL,
-  `COL` varchar(35) DEFAULT NULL,
-  `DV` varchar(35) DEFAULT NULL,
-  `START` int(4) NOT NULL,
-  `CTEAM` varchar(3) DEFAULT NULL,
-  UNIQUE KEY `PLAYER` (`PLAYER`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `punts`
---
-
-CREATE TABLE IF NOT EXISTS `punts` (
-  `PID` int(7) NOT NULL,
-  `PUNTER` varchar(7) NOT NULL,
-  `PGRO` tinyint(2) NOT NULL,
-  `PNET` tinyint(2) NOT NULL,
-  `PTS` varchar(1) NOT NULL,
-  `PR` varchar(7) NOT NULL,
-  `PRY` tinyint(3) NOT NULL,
-  `PFC` varchar(1) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `redzone`
---
-
-CREATE TABLE IF NOT EXISTS `redzone` (
-  `UID` int(6) NOT NULL,
-  `GID` int(5) NOT NULL,
-  `PLAYER` varchar(7) NOT NULL,
-  `PA` tinyint(2) NOT NULL,
-  `PC` tinyint(2) NOT NULL,
-  `PY` int(3) NOT NULL,
-  `INT` tinyint(1) NOT NULL,
-  `RA` tinyint(2) NOT NULL,
-  `SRA` tinyint(2) NOT NULL,
-  `RY` int(3) NOT NULL,
-  `TRG` tinyint(2) NOT NULL,
-  `REC` tinyint(2) NOT NULL,
-  `RECY` int(3) NOT NULL,
-  `FUML` tinyint(1) NOT NULL,
-  `PENY` tinyint(2) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `rush`
---
-
-CREATE TABLE IF NOT EXISTS `rush` (
-  `PID` int(7) NOT NULL,
-  `BC` varchar(7) NOT NULL,
-  `DIR` varchar(2) NOT NULL,
-  `YDS` tinyint(3) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `sacks`
---
-
-CREATE TABLE IF NOT EXISTS `sacks` (
-  `UID` int(6) NOT NULL,
-  `PID` int(7) NOT NULL,
-  `QB` varchar(7) NOT NULL,
-  `SK` varchar(7) NOT NULL,
-  `VALUE` decimal(2,1) NOT NULL,
-  `YDSL` int(3) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `safeties`
---
-
-CREATE TABLE IF NOT EXISTS `safeties` (
-  `PID` int(7) NOT NULL,
-  `SAF` varchar(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `scoring`
---
-
-CREATE TABLE IF NOT EXISTS `scoring` (
-  `PID` int(7) NOT NULL,
-  `PTS` tinyint(1) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `shotgun`
---
-
-CREATE TABLE IF NOT EXISTS `shotgun` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spikes`
---
-
-CREATE TABLE IF NOT EXISTS `spikes` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `splays`
---
-
-CREATE TABLE IF NOT EXISTS `splays` (
-  `PID` int(7) NOT NULL,
-  UNIQUE KEY `PID` (`PID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Successful Plays - See notes for more info.';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tackles`
---
-
-CREATE TABLE IF NOT EXISTS `tackles` (
-  `UID` int(7) NOT NULL,
-  `PID` int(7) NOT NULL,
-  `TCK` varchar(7) NOT NULL,
-  `VALUE` decimal(2,1) NOT NULL,
-  UNIQUE KEY `UID` (`UID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Special teams tackles are not counted (ie, kickoffs, punts)';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `team`
---
-
-CREATE TABLE IF NOT EXISTS `team` (
-  `TID` int(5) NOT NULL,
-  `GID` int(5) NOT NULL,
-  `TNAME` varchar(3) NOT NULL,
-  `PTS` tinyint(2) NOT NULL,
-  `1QP` tinyint(2) NOT NULL,
-  `2QP` tinyint(2) NOT NULL,
-  `3QP` tinyint(2) NOT NULL,
-  `4QP` tinyint(2) NOT NULL,
-  `RFD` tinyint(2) NOT NULL,
-  `PFD` tinyint(2) NOT NULL,
-  `IFD` tinyint(2) NOT NULL,
-  `RY` int(3) NOT NULL,
-  `RA` tinyint(2) NOT NULL,
-  `PY` int(3) NOT NULL,
-  `PA` tinyint(2) NOT NULL,
-  `PC` tinyint(2) NOT NULL,
-  `SK` tinyint(2) NOT NULL,
-  `INT` tinyint(1) NOT NULL,
-  `FUM` tinyint(1) NOT NULL,
-  `PU` tinyint(2) NOT NULL,
-  `GPY` int(3) NOT NULL,
-  `PR` tinyint(2) NOT NULL,
-  `PRY` int(3) NOT NULL,
-  `KR` tinyint(2) NOT NULL,
-  `KRY` int(3) NOT NULL,
-  `IR` tinyint(1) NOT NULL,
-  `IRY` int(3) NOT NULL,
-  `PEN` int(3) NOT NULL,
-  `TOP` decimal(3,1) NOT NULL,
-  `TD` tinyint(1) NOT NULL,
-  `TDR` tinyint(1) NOT NULL,
-  `TDP` tinyint(1) NOT NULL,
-  `TDT` tinyint(1) NOT NULL,
-  `FGM` tinyint(1) NOT NULL,
-  `FGAT` tinyint(2) NOT NULL,
-  `FGY` int(3) NOT NULL,
-  `RZA` tinyint(2) NOT NULL,
-  `RZC` tinyint(1) NOT NULL,
-  `BRY` int(3) NOT NULL,
-  `BPY` int(3) NOT NULL,
-  `SRP` tinyint(2) NOT NULL,
-  `S1RP` tinyint(2) NOT NULL,
-  `S2RP` tinyint(2) NOT NULL,
-  `S3RP` tinyint(2) NOT NULL,
-  `SPP` tinyint(2) NOT NULL,
-  `S1PP` tinyint(2) NOT NULL,
-  `S2PP` tinyint(2) NOT NULL,
-  `S3PP` tinyint(2) NOT NULL,
-  `LEA` tinyint(2) NOT NULL,
-  `LEY` int(3) NOT NULL,
-  `LTA` tinyint(2) NOT NULL,
-  `LTY` int(3) NOT NULL,
-  `LGA` tinyint(2) NOT NULL,
-  `LGY` int(3) NOT NULL,
-  `MDA` tinyint(2) NOT NULL,
-  `MDY` int(3) NOT NULL,
-  `RGA` tinyint(2) NOT NULL,
-  `RGY` int(3) NOT NULL,
-  `RTA` tinyint(2) NOT NULL,
-  `RTY` int(3) NOT NULL,
-  `REA` tinyint(2) NOT NULL,
-  `REY` int(3) NOT NULL,
-  `R1A` tinyint(2) NOT NULL,
-  `R1Y` int(3) NOT NULL,
-  `R2A` tinyint(2) NOT NULL,
-  `R2Y` int(3) NOT NULL,
-  `R3A` tinyint(2) NOT NULL,
-  `R3Y` int(3) NOT NULL,
-  `QBA` tinyint(2) NOT NULL,
-  `QBY` int(3) NOT NULL,
-  `SLA` tinyint(2) NOT NULL,
-  `SLY` int(3) NOT NULL,
-  `SMA` tinyint(2) NOT NULL,
-  `SMY` int(3) NOT NULL,
-  `SRA` tinyint(2) NOT NULL,
-  `SRY` int(3) NOT NULL,
-  `DLA` tinyint(2) NOT NULL,
-  `DLY` int(3) NOT NULL,
-  `DMA` tinyint(2) NOT NULL,
-  `DMY` int(3) NOT NULL,
-  `DRA` tinyint(2) NOT NULL,
-  `DRY` int(3) NOT NULL,
-  `WR1A` tinyint(2) NOT NULL,
-  `WR1Y` int(3) NOT NULL,
-  `WR3A` tinyint(2) NOT NULL,
-  `WR3Y` int(3) NOT NULL,
-  `TEA` tinyint(2) NOT NULL,
-  `TEY` int(3) NOT NULL,
-  `RBA` tinyint(2) NOT NULL,
-  `RBY` int(3) NOT NULL,
-  `SGA` tinyint(2) NOT NULL,
-  `SGY` int(3) NOT NULL,
-  `P1A` tinyint(2) NOT NULL,
-  `P1Y` int(3) NOT NULL,
-  `P2A` tinyint(2) NOT NULL,
-  `P2Y` int(3) NOT NULL,
-  `P3A` tinyint(2) NOT NULL,
-  `P3Y` int(3) NOT NULL,
-  `SPC` tinyint(2) NOT NULL,
-  `MPC` tinyint(2) NOT NULL,
-  `LPC` tinyint(2) NOT NULL,
-  `Q1RA` tinyint(2) NOT NULL,
-  `Q1RY` int(3) NOT NULL,
-  `Q1PA` tinyint(2) NOT NULL,
-  `Q1PY` int(3) NOT NULL,
-  `LCRA` tinyint(2) NOT NULL,
-  `LCRY` int(3) NOT NULL,
-  `LCPA` tinyint(2) NOT NULL,
-  `LCPY` int(3) NOT NULL,
-  `RZRA` tinyint(2) NOT NULL,
-  `RZRY` int(3) NOT NULL,
-  `RZPA` tinyint(2) NOT NULL,
-  `RZPY` int(3) NOT NULL,
-  `SKY` int(3) NOT NULL,
-  `LBS` decimal(3,1) NOT NULL,
-  `DBS` decimal(3,1) NOT NULL,
-  `SFPY` int(3) NOT NULL,
-  `DRV` tinyint(2) NOT NULL,
-  `NPY` int(3) NOT NULL,
-  `TB` tinyint(1) NOT NULL,
-  `I20` tinyint(1) NOT NULL,
-  `RTD` tinyint(1) NOT NULL,
-  `LNR` decimal(3,1) NOT NULL,
-  `LNP` decimal(3,1) NOT NULL,
-  `LBR` decimal(3,1) NOT NULL,
-  `LBP` decimal(3,1) NOT NULL,
-  `DBR` decimal(3,1) NOT NULL,
-  `DBP` decimal(3,1) NOT NULL,
-  `NHA` tinyint(2) NOT NULL,
-  `S3A` tinyint(2) NOT NULL,
-  `S3C` tinyint(2) NOT NULL,
-  `L3A` tinyint(2) NOT NULL,
-  `L3C` tinyint(2) NOT NULL,
-  `STF` tinyint(2) NOT NULL,
-  `DP` tinyint(2) NOT NULL,
-  `FSP` tinyint(2) NOT NULL,
-  `OHP` tinyint(2) NOT NULL,
-  `PBEP` tinyint(1) NOT NULL,
-  `DLP` tinyint(1) NOT NULL,
-  `DSP` tinyint(1) NOT NULL,
-  `DUM` tinyint(1) NOT NULL,
-  `PFN` tinyint(1) NOT NULL,
-  UNIQUE KEY `TID` (`TID`)
+CREATE TABLE  team (
+  TID integer NOT NULL,
+  GID integer NOT NULL,
+  TNAME varchar(3) NOT NULL,
+  PTS smallint NOT NULL,
+  1QP smallint NOT NULL,
+  2QP smallint NOT NULL,
+  3QP smallint NOT NULL,
+  4QP smallint NOT NULL,
+  RFD smallint NOT NULL,
+  PFD smallint NOT NULL,
+  IFD smallint NOT NULL,
+  RY integer NOT NULL,
+  RA smallint NOT NULL,
+  PY integer NOT NULL,
+  PA smallint NOT NULL,
+  PC smallint NOT NULL,
+  SK smallint NOT NULL,
+  INT smallint NOT NULL,
+  FUM smallint NOT NULL,
+  PU smallint NOT NULL,
+  GPY integer NOT NULL,
+  PR smallint NOT NULL,
+  PRY integer NOT NULL,
+  KR smallint NOT NULL,
+  KRY integer NOT NULL,
+  IR smallint NOT NULL,
+  IRY integer NOT NULL,
+  PEN integer NOT NULL,
+  TOP decimal(3,1) NOT NULL,
+  TD smallint NOT NULL,
+  TDR smallint NOT NULL,
+  TDP smallint NOT NULL,
+  TDT smallint NOT NULL,
+  FGM smallint NOT NULL,
+  FGAT smallint NOT NULL,
+  FGY integer NOT NULL,
+  RZA smallint NOT NULL,
+  RZC smallint NOT NULL,
+  BRY integer NOT NULL,
+  BPY integer NOT NULL,
+  SRP smallint NOT NULL,
+  S1RP smallint NOT NULL,
+  S2RP smallint NOT NULL,
+  S3RP smallint NOT NULL,
+  SPP smallint NOT NULL,
+  S1PP smallint NOT NULL,
+  S2PP smallint NOT NULL,
+  S3PP smallint NOT NULL,
+  LEA smallint NOT NULL,
+  LEY integer NOT NULL,
+  LTA smallint NOT NULL,
+  LTY integer NOT NULL,
+  LGA smallint NOT NULL,
+  LGY integer NOT NULL,
+  MDA smallint NOT NULL,
+  MDY integer NOT NULL,
+  RGA smallint NOT NULL,
+  RGY integer NOT NULL,
+  RTA smallint NOT NULL,
+  RTY integer NOT NULL,
+  REA smallint NOT NULL,
+  REY integer NOT NULL,
+  R1A smallint NOT NULL,
+  R1Y integer NOT NULL,
+  R2A smallint NOT NULL,
+  R2Y integer NOT NULL,
+  R3A smallint NOT NULL,
+  R3Y integer NOT NULL,
+  QBA smallint NOT NULL,
+  QBY integer NOT NULL,
+  SLA smallint NOT NULL,
+  SLY integer NOT NULL,
+  SMA smallint NOT NULL,
+  SMY integer NOT NULL,
+  SRA smallint NOT NULL,
+  SRY integer NOT NULL,
+  DLA smallint NOT NULL,
+  DLY integer NOT NULL,
+  DMA smallint NOT NULL,
+  DMY integer NOT NULL,
+  DRA smallint NOT NULL,
+  DRY integer NOT NULL,
+  WR1A smallint NOT NULL,
+  WR1Y integer NOT NULL,
+  WR3A smallint NOT NULL,
+  WR3Y integer NOT NULL,
+  TEA smallint NOT NULL,
+  TEY integer NOT NULL,
+  RBA smallint NOT NULL,
+  RBY integer NOT NULL,
+  SGA smallint NOT NULL,
+  SGY integer NOT NULL,
+  P1A smallint NOT NULL,
+  P1Y integer NOT NULL,
+  P2A smallint NOT NULL,
+  P2Y integer NOT NULL,
+  P3A smallint NOT NULL,
+  P3Y integer NOT NULL,
+  SPC smallint NOT NULL,
+  MPC smallint NOT NULL,
+  LPC smallint NOT NULL,
+  Q1RA smallint NOT NULL,
+  Q1RY integer NOT NULL,
+  Q1PA smallint NOT NULL,
+  Q1PY integer NOT NULL,
+  LCRA smallint NOT NULL,
+  LCRY integer NOT NULL,
+  LCPA smallint NOT NULL,
+  LCPY integer NOT NULL,
+  RZRA smallint NOT NULL,
+  RZRY integer NOT NULL,
+  RZPA smallint NOT NULL,
+  RZPY integer NOT NULL,
+  SKY integer NOT NULL,
+  LBS decimal(3,1) NOT NULL,
+  DBS decimal(3,1) NOT NULL,
+  SFPY integer NOT NULL,
+  DRV smallint NOT NULL,
+  NPY integer NOT NULL,
+  TB smallint NOT NULL,
+  I20 smallint NOT NULL,
+  RTD smallint NOT NULL,
+  LNR decimal(3,1) NOT NULL,
+  LNP decimal(3,1) NOT NULL,
+  LBR decimal(3,1) NOT NULL,
+  LBP decimal(3,1) NOT NULL,
+  DBR decimal(3,1) NOT NULL,
+  DBP decimal(3,1) NOT NULL,
+  NHA smallint NOT NULL,
+  S3A smallint NOT NULL,
+  S3C smallint NOT NULL,
+  L3A smallint NOT NULL,
+  L3C smallint NOT NULL,
+  STF smallint NOT NULL,
+  DP smallint NOT NULL,
+  FSP smallint NOT NULL,
+  OHP smallint NOT NULL,
+  PBEP smallint NOT NULL,
+  DLP smallint NOT NULL,
+  DSP smallint NOT NULL,
+  DUM smallint NOT NULL,
+  PFN smallint NOT NULL,
+  UNIQUE KEY TID (TID)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
