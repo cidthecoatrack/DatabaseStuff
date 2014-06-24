@@ -191,7 +191,7 @@ CREATE TABLE  fumbles (
 -- Table structure for table games
 --
 
-CREATE TABLE  games (
+CREATE TABLE  his_games (
   GID integer NOT NULL,
   SEAS integer NOT NULL,
   WK smallint NOT NULL,
@@ -422,9 +422,8 @@ CREATE TABLE  redzone (
   RECY integer NOT NULL,
   FUML smallint NOT NULL,
   PENY smallint NOT NULL,
-  UNIQUE KEY UID (UID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
+  UNIQUE (UID)
+)
 -- --------------------------------------------------------
 
 --
@@ -437,7 +436,7 @@ CREATE TABLE  rush (
   DIR varchar(2) NOT NULL,
   YDS smallint NOT NULL,
   UNIQUE (PID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+)
 
 -- --------------------------------------------------------
 
@@ -452,8 +451,8 @@ CREATE TABLE  sacks (
   SK varchar(7) NOT NULL,
   VALUE decimal(2,1) NOT NULL,
   YDSL integer NOT NULL,
-  UNIQUE KEY UID (UID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  UNIQUE (UID)
+)
 
 -- --------------------------------------------------------
 
@@ -465,7 +464,7 @@ CREATE TABLE  safeties (
   PID integer NOT NULL,
   SAF varchar(7) NOT NULL,
   UNIQUE (PID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+)
 
 -- --------------------------------------------------------
 
@@ -477,7 +476,7 @@ CREATE TABLE  scoring (
   PID integer NOT NULL,
   PTS smallint NOT NULL,
   UNIQUE (PID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+)
 
 -- --------------------------------------------------------
 
@@ -488,7 +487,7 @@ CREATE TABLE  scoring (
 CREATE TABLE  shotgun (
   PID integer NOT NULL,
   UNIQUE (PID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) 
 
 -- --------------------------------------------------------
 
@@ -499,7 +498,7 @@ CREATE TABLE  shotgun (
 CREATE TABLE  spikes (
   PID integer NOT NULL,
   UNIQUE (PID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) 
 
 -- --------------------------------------------------------
 
@@ -510,7 +509,7 @@ CREATE TABLE  spikes (
 CREATE TABLE  splays (
   PID integer NOT NULL,
   UNIQUE (PID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT=Successful Plays - See notes for more info.;
+) 
 
 -- --------------------------------------------------------
 
@@ -523,8 +522,8 @@ CREATE TABLE  tackles (
   PID integer NOT NULL,
   TCK varchar(7) NOT NULL,
   VALUE decimal(2,1) NOT NULL,
-  UNIQUE KEY UID (UID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT=Special teams tackles are not counted (ie, kickoffs, punts);
+  UNIQUE (UID)
+) 
 
 -- --------------------------------------------------------
 
@@ -537,10 +536,10 @@ CREATE TABLE  team (
   GID integer NOT NULL,
   TNAME varchar(3) NOT NULL,
   PTS smallint NOT NULL,
-  1QP smallint NOT NULL,
-  2QP smallint NOT NULL,
-  3QP smallint NOT NULL,
-  4QP smallint NOT NULL,
+  QP1 smallint NOT NULL,
+  QP2 smallint NOT NULL,
+  QP3 smallint NOT NULL,
+  QP4 smallint NOT NULL,
   RFD smallint NOT NULL,
   PFD smallint NOT NULL,
   IFD smallint NOT NULL,
@@ -561,7 +560,7 @@ CREATE TABLE  team (
   IR smallint NOT NULL,
   IRY integer NOT NULL,
   PEN integer NOT NULL,
-  TOP decimal(3,1) NOT NULL,
+  Time decimal(3,1) NOT NULL,
   TD smallint NOT NULL,
   TDR smallint NOT NULL,
   TDP smallint NOT NULL,
@@ -675,8 +674,8 @@ CREATE TABLE  team (
   DSP smallint NOT NULL,
   DUM smallint NOT NULL,
   PFN smallint NOT NULL,
-  UNIQUE KEY TID (TID)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  UNIQUE (TID)
+) 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
